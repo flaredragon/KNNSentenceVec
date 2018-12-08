@@ -7,6 +7,8 @@ import synonyms from 'synonyms'
 const json = require('./wordvecs5000.json');
 const jwords = new Set(Object.keys(json.vectors)); 
 console.log(jwords);
+var TfIdf = natural.TfIdf;
+var tfidf = new TfIdf();
 
 class Predict extends Component {
     constructor() {
@@ -118,6 +120,7 @@ class Predict extends Component {
     sentenceList.forEach((t) => {
       tfidf.addDocument(t.text);
     });
+    
     return tfidf;
   }
 
@@ -127,11 +130,12 @@ class Predict extends Component {
     var sentenceList = this.props.list;
     var sproc = [];
     var svecs=[];
-    var tfidf = this.calcTfidf(sentenceList);
+    //var tfidf = this.calcTfidf(sentenceList);
     //var fvalue = new Array(300).fill(0.0);
     sentenceList.forEach((t,docnum) => {
         var sentence = this.tokenizing(t.text);
-        var s1 = this.removeStopWords(sentence);
+	var fset1 = [ ...new Set(sentence) ];        
+	var s1 = this.removeStopWords(fset1);
         //console.log(s1);
         var s2 = this.taggingAndLemmatizing(s1);
         //console.log(s2);
@@ -139,12 +143,14 @@ class Predict extends Component {
         //console.log(s3);
 	var fset = [ ...new Set(s3) ];
 	sproc.push(fset);
+	tfidf.addDocument(fset);
 	var fvalue = new Array(300).fill(0.0);
-        s3.forEach((item) =>{
+        fset.forEach((item) =>{
 	if(jwords.has(item)){
         var temp = json.vectors[`${item}`];
         var weight = tfidf.tfidf(item,docnum);
-        console.log(item,weight,temp);
+	console.log('tfidf = ',weight,docnum,item);
+        //console.log(item,weight,temp);
         for(var i=0;i<300;i++){
           //console.log(fvalue[i],temp[i]);
           fvalue[i]=fvalue[i]+temp[i]*weight;
@@ -165,14 +171,22 @@ class Predict extends Component {
   knn = (e) => {
      e.preventDefault();
      var sentence = this.state.value;
-     var prevec = new Array(300).fill(0.0);
+     var prevec = new Array(300).fill(0.0);        
      var s0 = this.tokenizing(sentence);
-     var s1 = this.removeStopWords(s0);
+     console.log(s0);
+     var fset1 = [ ...new Set(s0) ];
+     var s1 = this.removeStopWords(fset1);
+     console.log(s1);
      var s2 = this.taggingAndLemmatizing(s1);
+     console.log(s2);
      var s3 = this.synonymReplace(s2);
-     s3.forEach((item) =>{
+     console.log(s3);
+     var fset = [ ...new Set(s3) ];
+     tfidf.addDocument(fset);
+     fset.forEach((item) =>{
       var temp = json.vectors[`${item}`];
       console.log(item,temp);
+      var weightPS = tfidf.tfidf(item,this.state.sentvecs.length); 
       for(var i=0;i<300;i++){
         prevec[i]=prevec[i]+temp[i];
         }
@@ -214,7 +228,7 @@ class Predict extends Component {
 	<button onClick={this.predicting}>Analyze the Data</button>
 	<div> 	
 	<ul className="theList">
-        {pdata.map(t => <li key={t}>{t.toString()}</li>)}
+        {pdata.map(t => <li key={t.toString()||Date.now()}>{t.toString()}</li>)}
      	</ul>
 	</div>
        </div>       
@@ -225,7 +239,7 @@ class Predict extends Component {
           </form>
 	<div>
 	<ul className="theList">
-	{knn.map(m => <li key={m.distance}>{m.sentence}, Distance = {m.distance}</li>)}
+	{knn.map(m => <li key={m.sentence.toString()+m.distance.toString()}>{m.sentence}, Distance = {m.distance}</li>)}
 	</ul>        
 	</div>
 	</div>
