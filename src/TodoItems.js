@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 class TodoItems extends Component {
   createTasks = item => {
     return (
-      <li key={item.key} onClick={() => this.props.deleteItem(item.key)}>
-        {item.text}
+      <li key={item.key}>
+        <div className="sentence">{item.text}</div>
+        <button className="delete-btn" onClick={() => this.props.deleteItem(item.key)}>X</button>
       </li>
     )
   }

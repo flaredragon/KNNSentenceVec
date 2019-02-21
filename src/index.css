@@ -1,12 +1,13 @@
 body {
   padding: 50px;
-  background-color: #66CCFF;
+  background-color: #1a1a1a;
   font-family: sans-serif;
 }
 
 .column {
     float: left;
-    width: 33.33%;
+    width: 32%;
+    padding:5px;
 }
 
 /* Clear floats after the columns */
@@ -23,10 +24,15 @@ body {
 }
 
 .todoListMain .header input {
-  padding: 10px;
+  padding: 5px;
   font-size: 16px;
-  border: 2px solid #FFF;
+  border: 2px solid #333;
   width: 165px;
+  background:#333333;
+  height:28px;
+  border-radius:5px;
+  outline:none;
+  color:#fff;
 }
 
 button {
@@ -34,14 +40,14 @@ button {
   font-size: 16px;
   margin: 10px;
   margin-right: 0px;
-  background-color: #0066FF;
+  background-color: transparent;
   color: #FFF;
-  border: 2px solid #0066FF;
+  border: 2px solid #777;
+  border-radius:5px;
 }
 
 button:hover {
-  background-color: #003399;
-  border: 2px solid #003399;
+  border: 2px solid #fff;
   cursor: pointer;
 }
 
@@ -49,19 +55,20 @@ button:hover {
   list-style: none;
   color: red;
   padding-left: 0;
-  width: 250px;
+  width: 300px;
 }
 .right {
   margin:20px;
 }
 
 .todoListMain .theList li {
-  color: #333;
+  color: #fff;
   background-color: rgba(255, 255, 255, .5);
-  padding: 15px;
+  padding: 10px;
   margin-bottom: 15px;
-  border-radius: 5px;
+  border-radius: 0px;
   list-style: none;
+  height:50px;
 }
 
 ul.theList {
@@ -82,7 +89,31 @@ ul.theList {
   transition: background-color .2s ease-out;
 }
 
-.todoListMain .theList li:hover {
-  background-color: pink;
-  cursor: pointer;
+.delete-btn {
+  float:right;
+  background:transparent;
+  outline:none;
+  border:none;
+  font-weight:bold;
+  font-size:12px;
+  width:10%;
+  padding:0;
+  margin-left:5px;
+  margin-top:0px;
+}
+
+.delete-btn:hover{
+  border:none;
+}
+
+.sentence {
+  float:left;
+  width:85%;
+}
+
+.analyzed-array {
+}
+
+.header{
+  text-align:center;
 }

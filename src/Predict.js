@@ -17,7 +17,8 @@ class Predict extends Component {
           value: "",
           sentvecs:[],
           nearestvecs:[],
-	  psentence:[]      
+	  psentence:[],
+          disabled:false,      
         }
 	natural.PorterStemmer.attach();
     }
@@ -130,17 +131,13 @@ class Predict extends Component {
     var sentenceList = this.props.list;
     var sproc = [];
     var svecs=[];
-    //var tfidf = this.calcTfidf(sentenceList);
-    //var fvalue = new Array(300).fill(0.0);
+    this.setState({disabled:true});
     sentenceList.forEach((t,docnum) => {
         var sentence = this.tokenizing(t.text);
 	var fset1 = [ ...new Set(sentence) ];        
 	var s1 = this.removeStopWords(fset1);
-        //console.log(s1);
         var s2 = this.taggingAndLemmatizing(s1);
-        //console.log(s2);
         var s3 = this.synonymReplace(s2);
-        //console.log(s3);
 	var fset = [ ...new Set(s3) ];
 	sproc.push(fset);
 	tfidf.addDocument(fset);
@@ -150,22 +147,14 @@ class Predict extends Component {
         var temp = json.vectors[`${item}`];
         var weight = tfidf.tfidf(item,docnum);
 	console.log('tfidf = ',weight,docnum,item);
-        //console.log(item,weight,temp);
         for(var i=0;i<300;i++){
-          //console.log(fvalue[i],temp[i]);
           fvalue[i]=fvalue[i]+temp[i]*weight;
-          //console.log('t',fvalue[i]);
           }
 	 }
         });
-	//console.log(json.vectors.lovely,json.vectors.hate);
-        console.log(fvalue);
         svecs.push(fvalue);
-	console.log(svecs);
     });
-    console.log(svecs);
     this.setState({sentvecs:svecs,psentence:sproc});
-    //console.log("haha");
    } 
    
   knn = (e) => {
@@ -225,10 +214,10 @@ class Predict extends Component {
 	return (
       <div className="todoListMain">
 	<div className="header column">      
-	<button onClick={this.predicting}>Analyze the Data</button>
+	<button className="analyze" onClick={this.predicting}>Analyze the Data</button>
 	<div> 	
 	<ul className="theList">
-        {pdata.map(t => <li key={t.toString()||Date.now()}>{t.toString()}</li>)}
+        {pdata.map(t => <li className="analyzed-array" key={t.toString()||Date.now()}>{t.toString()||'No words found'}</li>)}
      	</ul>
 	</div>
        </div>       
