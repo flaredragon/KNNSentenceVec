@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
-class TodoList extends Component {
+class List extends Component {
   componentDidUpdate() {
     this.props.inputElement.current.focus()
   }
   render() {
     return (
-      <div className="todoListMain">
+      <div className="ListMain">
         <div className="header">
           <form onSubmit={this.props.addItem}>
             <input
@@ -25,4 +25,4 @@ class TodoList extends Component {
   }
 }
 
-export default TodoList
+export default List

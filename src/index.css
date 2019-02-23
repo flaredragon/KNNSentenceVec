@@ -10,7 +10,6 @@ body {
     padding:5px;
 }
 
-/* Clear floats after the columns */
 .row:after {
     content: "";
     display: table;
@@ -23,7 +22,7 @@ body {
   flex-direction: column-reverse;
 }
 
-.todoListMain .header input {
+.ListMain .header input {
   padding: 5px;
   font-size: 16px;
   border: 2px solid #333;
@@ -51,17 +50,18 @@ button:hover {
   cursor: pointer;
 }
 
-.todoListMain .theList {
+.ListMain .theList {
   list-style: none;
   color: red;
   padding-left: 0;
   width: 300px;
 }
+
 .right {
   margin:20px;
 }
 
-.todoListMain .theList li {
+.ListMain .theList li {
   color: #fff;
   background-color: rgba(255, 255, 255, .5);
   padding: 10px;
@@ -109,11 +109,16 @@ ul.theList {
 .sentence {
   float:left;
   width:85%;
+  text-align:left;
 }
 
 .analyzed-array {
 }
 
 .header{
+  text-align:center;
+}
+
+.ListMain {
   text-align:center;
 }

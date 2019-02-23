@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-// import './App.css'
-import TodoList from './TodoList'
-import TodoItems from './TodoItems'
-import Predict from './Predict'
+import List from './Components/List'
+import Item from './Components/Item'
+import Predict from './Components/Predict'
 
 class App extends Component {
   inputElement = React.createRef()
@@ -47,14 +46,14 @@ class App extends Component {
     return (
       <div className="App row">
 	<div className="column">        
-	<TodoList
+	<List
           addItem={this.addItem}
           inputElement={this.inputElement}
           handleInput={this.handleInput}
           currentItem={this.state.currentItem}
         />
-	<div className="todoListMain">
-        <TodoItems entries={this.state.items} deleteItem={this.deleteItem} />
+	<div className="ListMain">
+        <Item entries={this.state.items} deleteItem={this.deleteItem} />
         </div>
 	</div>
 	<Predict list={this.state.items}/>

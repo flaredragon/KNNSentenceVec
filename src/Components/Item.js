@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-class TodoItems extends Component {
-  createTasks = item => {
+class Item extends Component {
+  createSentences = item => {
     return (
       <li key={item.key}>
         <div className="sentence">{item.text}</div>
@@ -10,11 +10,11 @@ class TodoItems extends Component {
     )
   }
   render() {
-    const todoEntries = this.props.entries
-    const listItems = todoEntries.map(this.createTasks)
+    const entries = this.props.entries
+    const listItems = entries.map(this.createSentences)
 
     return <ul className="theList">{listItems}</ul>
   }
 }
 
-export default TodoItems
+export default Item

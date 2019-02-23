@@ -4,7 +4,7 @@ import sw from 'remove-stopwords'
 import pos from 'pos'
 import lemmatize from 'wink-lemmatizer'
 import synonyms from 'synonyms'
-const json = require('./wordvecs5000.json');
+const json = require('./../wordvecs5000.json');
 const jwords = new Set(Object.keys(json.vectors)); 
 console.log(jwords);
 var TfIdf = natural.TfIdf;
@@ -212,12 +212,12 @@ class Predict extends Component {
     var knn = this.state.nearestvecs
  
 	return (
-      <div className="todoListMain">
+      <div className="ListMain">
 	<div className="header column">      
 	<button className="analyze" onClick={this.predicting}>Analyze the Data</button>
 	<div> 	
 	<ul className="theList">
-        {pdata.map(t => <li className="analyzed-array" key={t.toString()||Date.now()}>{t.toString()||'No words found'}</li>)}
+        {pdata.map((t,i) => <li className="analyzed-array" key={i}>{t.toString()||'No words found'}</li>)}
      	</ul>
 	</div>
        </div>       
@@ -228,7 +228,7 @@ class Predict extends Component {
           </form>
 	<div>
 	<ul className="theList">
-	{knn.map(m => <li key={m.sentence.toString()+m.distance.toString()}>{m.sentence}, Distance = {m.distance}</li>)}
+	{knn.map((m,i) => <li key={i}>{m.sentence}<br/>Distance = {m.distance}</li>)}
 	</ul>        
 	</div>
 	</div>
